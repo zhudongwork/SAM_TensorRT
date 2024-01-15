@@ -18,10 +18,12 @@ int main(int argc, char *argv[])
    
 
     cv::Rect init_box = cv::selectROI("dst", frame, false, false);
+    auto center_x = init_box.x + init_box.width / 2;
+    auto center_y = init_box.y + init_box.height / 2;
     cv::Mat outputMaskSam;
     
     auto start_time = std::chrono::high_resolution_clock::now();
-    outputMaskSam = sam.getMask(frame, init_box.x, init_box.y);
+    outputMaskSam = sam.getMask(frame, center_x, center_y);
     auto end_time = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
     std::cout << "Mobile SAM run time taken : " << duration.count() << " ms" << std::endl;
